@@ -6,15 +6,17 @@ services:
     container_name: "nextjs"
     env_file:
       - ./cookify-frontend/.env.development
-    networks:
-      - cookify-webapp
+    ports:
+      - "3000:3000"
   nginx:
     build: ./cookify-frontend/nginx
     container_name: "nginx"
     ports:
       - "80:80"
-    networks:
-      - cookify-webapp
+      - "443:443"
+    volumes:
+      - /home/cookifywebapp/.well-known/pki-validation:/usr/share/nginx/html/.well-known/pki-validation/
+      - /home/cookifywebapp/cookify-devops/cert:/cert/
   expressjs:
     image: ghcr.io/cookify-webapp/cookify-backend:dev
     restart: unless-stopped
@@ -25,8 +27,6 @@ services:
       - "5000:5000"
     depends_on:
       - mongodb
-    networks:
-      - cookify-webapp
   mongodb:
     image: ghcr.io/cookify-webapp/cookify-database:dev
     container_name: "mongodb"
@@ -35,8 +35,7 @@ services:
       - "27017:27017"
     volumes:
       - ./mongo-data:/data/db
-    networks:
-      - cookify-webapp
 networks:
-  cookify-webapp:
-    driver: bridge
+    default:
+      external:
+        name: cookify-devops_cookify-webapp
