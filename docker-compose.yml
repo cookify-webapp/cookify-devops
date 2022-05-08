@@ -1,7 +1,7 @@
 version: "3"
 services:
   nginx:
-    build: ./cookify-frontend/nginx
+    build: ./nginx
     container_name: "nginx"
     ports:
       - "80:80"
