@@ -7,7 +7,6 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /home/cookifywebapp/.well-known/pki-validation:/usr/share/nginx/html/.well-known/pki-validation/
       - /home/cookifywebapp/cookify-devops/cert:/cert/
 networks:
   default:
