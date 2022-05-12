@@ -7,7 +7,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /home/cookifywebapp/cookify-devops/cert:/cert/
+      - /home/ckfyadmin/cookify-devops/cert:/cert/
 networks:
   default:
     external:
